@@ -1,52 +1,52 @@
-function onReady() {
+
+//for Checkpoint 5 To-Do-App Part 1
+
+function onReady(){
   const addToDoForm = document.getElementById('addToDoForm');
   const newToDoText = document.getElementById('newToDoText');
   const toDoList = document.getElementById('toDoList');
 
   addToDoForm.addEventListener('submit', event => {
     event.preventDefault();
-
-    //get the text
     let title = newToDoText.value;
 
-    //create a new li
     let newLi = document.createElement('li');
-
-    //create a new input
+    newLi.classList.add('mdl-list__item', 'newMdl');
+    let toDoContainer = document.createElement('span');
+    toDoContainer.classList.add('mdl-list__item-primary-content', 'newMdl');
+    let toDoLabel = document.createElement('label');
+    toDoLabel.classList.add('mdl-checkbox', 'mdl-js-checkbox', 'mdl-js-ripple-effect', 'newMdl');
+    toDoLabel.htmlFor = 'list-checkbox-1';
     let checkbox = document.createElement('input');
-
-    //create deleteButton
-    let deleteButton = document.createElement('button');
-
-    //set the input's type to checkbox
     checkbox.type = "checkbox";
+    checkbox.id = 'list-checkbox-1';
+    checkbox.classList.add('mdl-checkbox__input', 'newMdl');
 
-    //set deleteButton title
-    deleteButton.textContent = 'Delete';
+    let deleteContainer = document.createElement('span');
+    deleteContainer.classList.add('mdl-list__item-secondary-action', 'newMdl');
 
-    //set the title
-    newLi.textContent = title;
 
-    //attach the checkbox to the li
-    newLi.appendChild(checkbox);
+    let deleteButton = document.createElement('button');
+    deleteButton.classList.add('mdl-button', 'mdl-js-button', 'mdl-button--icon', 'newMdl');
+    let icon = document.createElement('i');
+    let text = document.createTextNode('delete');
+    icon.classList.add('material-icons');
+    icon.appendChild(text);
+    deleteButton.appendChild(icon);
 
-    //add delete button to li
-    newLi.appendChild(deleteButton);
-
-    //attach the li to the ul
-    toDoList.appendChild(newLi);
-
-    //empty the input
-    newToDoText.value = '';
-
-    //to-do deletion
     deleteButton.addEventListener('click', event => {
-      event.target.parentNode.remove();
+      newLi.parentNode.removeChild(newLi);
     });
-  });
+
+
+    newLi.textContent = title;
+    newLi.appendChild(checkbox);
+    newLi.appendChild(deleteButton);
+    toDoList.appendChild(newLi);
+    newToDoText.value='';
+
+});
 }
-
-
-window.onload = function() {
+window.onload = function(){
   onReady();
-}
+};
