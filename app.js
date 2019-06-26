@@ -1,52 +1,44 @@
+function onReady() {
+  const toDos = [];
+    const addToDoForm = document.getElementById('addToDoForm');
 
-//for Checkpoint 5 To-Do-App Part 1
+  function creatNewToDo() {
+    const newToDoText = document.getElementById('newToDoText');
+    if(!newToDoText.value) {return;}
 
-function onReady(){
-  const addToDoForm = document.getElementById('addToDoForm');
-  const newToDoText = document.getElementById('newToDoText');
-  const toDoList = document.getElementById('toDoList');
+    toDos.push({
+      title: newToDoText.value,
+      complete: false
+    });
+      newToDoText.value = '';
+
+      renderTheUI();
+  }
 
   addToDoForm.addEventListener('submit', event => {
     event.preventDefault();
-    let title = newToDoText.value;
+    creatNewToDo();
+  });
 
-    let newLi = document.createElement('li');
-    newLi.classList.add('mdl-list__item', 'newMdl');
-    let toDoContainer = document.createElement('span');
-    toDoContainer.classList.add('mdl-list__item-primary-content', 'newMdl');
-    let toDoLabel = document.createElement('label');
-    toDoLabel.classList.add('mdl-checkbox', 'mdl-js-checkbox', 'mdl-js-ripple-effect', 'newMdl');
-    toDoLabel.htmlFor = 'list-checkbox-1';
-    let checkbox = document.createElement('input');
-    checkbox.type = "checkbox";
-    checkbox.id = 'list-checkbox-1';
-    checkbox.classList.add('mdl-checkbox__input', 'newMdl');
+  function renderTheUI() {
+    const toDoList = document.getElementById('toDoList');
 
-    let deleteContainer = document.createElement('span');
-    deleteContainer.classList.add('mdl-list__item-secondary-action', 'newMdl');
+    toDoList.textContent = '';
 
+    toDos.forEach(function(toDo) {
+      const newLi = document.createElement('li');
+      const checkbox = document.createElement('input');
+      checkbox.type = "checkbox";
 
-    let deleteButton = document.createElement('button');
-    deleteButton.classList.add('mdl-button', 'mdl-js-button', 'mdl-button--icon', 'newMdl');
-    let icon = document.createElement('i');
-    let text = document.createTextNode('delete');
-    icon.classList.add('material-icons');
-    icon.appendChild(text);
-    deleteButton.appendChild(icon);
+      newLi.textContent = toDo.title;
 
-    deleteButton.addEventListener('click', event => {
-      newLi.parentNode.removeChild(newLi);
+      toDoList.appendChild(newLi);
+      newLi.appendChild(checkbox);
     });
 
-
-    newLi.textContent = title;
-    newLi.appendChild(checkbox);
-    newLi.appendChild(deleteButton);
-    toDoList.appendChild(newLi);
-    newToDoText.value='';
-
-});
+  }
 }
-window.onload = function(){
+
+window.onload = function() {
   onReady();
 };
